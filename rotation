@@ -1,0 +1,91 @@
+//////90 degrees//////
+
+#include <iostream>
+#include "Image_Class.h"
+using namespace std;
+
+int main()
+{
+    Image img("luffy.jpg");
+    Image final_img(img.height,img.width);
+
+    for (int i = 0; i < img.width; i++)
+    {
+        for (int j = 0; j < img.height; j++) 
+        {
+            for (int k = 0; k < 3; k++)
+            {
+                int x = img.height - 1 - j ;
+                int y = i;
+                final_img(x,y,0) = img(i,j,0);
+                final_img(x,y,1) = img(i,j,1);
+                final_img(x,y,2) = img(i,j,2);
+            }
+        }
+    }
+    final_img.saveImage("luffyy.jpg");
+    cout << "Hello" << endl;
+    return 0;
+}
+
+
+
+//////180 degrees//////
+
+#include <iostream>
+#include "Image_Class.h"
+using namespace std;
+
+int main()
+{
+    Image img("luffy.jpg");
+    Image final_img(img.width,img.height);
+
+    for (int i = 0; i < img.width; i++)
+    {
+        for (int j = 0; j < img.height; j++) 
+        {
+            for (int k = 0; k < 3; k++)
+            {
+                int x = img.width - 1 - i ;
+                int y = img.height -1-j;
+                final_img(x,y,0) = img(i,j,0);
+                final_img(x,y,1) = img(i,j,1);
+                final_img(x,y,2) = img(i,j,2);
+            }
+        }
+    }
+    final_img.saveImage("luffyy.jpg");
+    cout << "Hello" << endl;
+    return 0;
+}
+
+//////270 degrees//////
+
+#include <iostream>
+#include "Image_Class.h"
+using namespace std;
+
+int main()
+{
+    Image img("luffy.jpg");
+    Image final_img(img.height,img.width);
+
+    for (int i = 0; i < img.width; i++)
+    {
+        for (int j = 0; j < img.height; j++) 
+        {
+            for (int k = 0; k < 3; k++)
+            {
+                int x =  j ;
+                int y = img.width -1-i;
+                final_img(x,y,0) = img(i,j,0);
+                final_img(x,y,1) = img(i,j,1);
+                final_img(x,y,2) = img(i,j,2);
+            }
+        }
+    }
+    final_img.saveImage("luffyy.jpg");
+    cout << "Hello" << endl;
+    return 0;
+}
