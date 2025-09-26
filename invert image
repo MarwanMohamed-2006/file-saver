@@ -1,14 +1,13 @@
 #include <iostream>
 #include "Image_Class.h"
+
 using namespace std;
 
-int main()
+Image invert_image(Image img , string filename , string file_last_name)
 {
-    Image img("luffy.jpg");
-
     for (int i = 0; i < img.width; i++)
     {
-        for (int j = 0; j < img.height; j++) 
+        for (int j = 0; j < img.height; j++)
         {
             for (int k = 0; k < 3; k++)
             {
@@ -16,7 +15,20 @@ int main()
             }
         }
     }
-    img.saveImage("luffyy.jpg");
-    cout << "Hello" << endl;
-    return 0;
+
+    img.saveImage(file_last_name);
+
+    return img;
+}
+
+int main()
+{
+    string filename , file_last_name;
+    cout << " plz enter the file name with format" <<endl;
+    cin >> filename;
+    Image img(filename);
+    cout << "\n"<<" plz enter the new name with the new format";
+    cin >> file_last_name; 
+    invert_image(img,filename,file_last_name);
+    return 0;
 }
