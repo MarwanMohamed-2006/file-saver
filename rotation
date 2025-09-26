@@ -1,91 +1,85 @@
-//////90 degrees//////
-
 #include <iostream>
 #include "Image_Class.h"
+
 using namespace std;
 
-int main()
+Image rotated_image(Image img ,Image final_img, string filename , string file_last_name)
 {
-    Image img("luffy.jpg");
-    Image final_img(img.height,img.width);
+    cout << "Please choose what degree adjustment do you want?" <<"\n"<< "90 degree - 180 degree - 270 degree" << endl;
+    int x;
+    while (true) {
+        cin >> x;
 
-    for (int i = 0; i < img.width; i++)
-    {
-        for (int j = 0; j < img.height; j++) 
-        {
-            for (int k = 0; k < 3; k++)
+        if (x == 90 || x == 180 || x == 270) {
+            if (x == 90)
             {
-                int x = img.height - 1 - j ;
-                int y = i;
-                final_img(x,y,0) = img(i,j,0);
-                final_img(x,y,1) = img(i,j,1);
-                final_img(x,y,2) = img(i,j,2);
+                final_img = Image(img.height, img.width); 
+                for (int i = 0; i < img.width; i++)
+                {
+                    for (int j = 0; j < img.height; j++) 
+                    {
+                        int new_x = img.height - 1 - j;
+                        int new_y = i;
+                        for (int c = 0; c < 3; c++)
+                        {
+                            final_img(new_x, new_y, c) = img(i, j, c);
+                        }
+                    }
+                }
+                final_img.saveImage(file_last_name);
+                return final_img;
+            }
+            else if (x == 180) 
+            {
+                final_img = Image(img.width, img.height); 
+                for (int i = 0; i < img.width; i++)
+                {
+                    for (int j = 0; j < img.height; j++) 
+                    {
+                        int new_x = img.width - 1 - i;
+                        int new_y = img.height - 1 - j;
+                        for (int c = 0; c < 3; c++)
+                        {
+                            final_img(new_x, new_y, c) = img(i, j, c);
+                        }
+                    }
+                }
+                final_img.saveImage(file_last_name);
+                return final_img;
+            }
+            else if (x == 270)
+            {
+                final_img = Image(img.height, img.width); 
+                for (int i = 0; i < img.width; i++)
+                {
+                    for (int j = 0; j < img.height; j++) 
+                    {
+                        int new_x = j;
+                        int new_y = img.width - 1 - i;
+                        for (int c = 0; c < 3; c++)
+                        {
+                            final_img(new_x, new_y, c) = img(i, j, c);
+                        }
+                    }
+                }
+                final_img.saveImage(file_last_name);
+                return final_img;
             }
         }
+        else {
+            cout << "Invalid input. Please enter 90, 180, or 270:" << endl;
+        }
     }
-    final_img.saveImage("luffyy.jpg");
-    cout << "Hello" << endl;
-    return 0;
 }
-
-
-
-//////180 degrees//////
-
-#include <iostream>
-#include "Image_Class.h"
-using namespace std;
-
 int main()
 {
-    Image img("luffy.jpg");
-    Image final_img(img.width,img.height);
-
-    for (int i = 0; i < img.width; i++)
-    {
-        for (int j = 0; j < img.height; j++) 
-        {
-            for (int k = 0; k < 3; k++)
-            {
-                int x = img.width - 1 - i ;
-                int y = img.height -1-j;
-                final_img(x,y,0) = img(i,j,0);
-                final_img(x,y,1) = img(i,j,1);
-                final_img(x,y,2) = img(i,j,2);
-            }
-        }
-    }
-    final_img.saveImage("luffyy.jpg");
-    cout << "Hello" << endl;
-    return 0;
-}
-
-//////270 degrees//////
-
-#include <iostream>
-#include "Image_Class.h"
-using namespace std;
-
-int main()
-{
-    Image img("luffy.jpg");
-    Image final_img(img.height,img.width);
-
-    for (int i = 0; i < img.width; i++)
-    {
-        for (int j = 0; j < img.height; j++) 
-        {
-            for (int k = 0; k < 3; k++)
-            {
-                int x =  j ;
-                int y = img.width -1-i;
-                final_img(x,y,0) = img(i,j,0);
-                final_img(x,y,1) = img(i,j,1);
-                final_img(x,y,2) = img(i,j,2);
-            }
-        }
-    }
-    final_img.saveImage("luffyy.jpg");
-    cout << "Hello" << endl;
-    return 0;
+    string filename , file_last_name;
+    cout << " plz enter the file name with format" <<endl;
+    cin >> filename;
+    Image img(filename);
+    cout <<" plz enter the new name with the new format" << endl;
+    cin >> file_last_name; 
+    Image final_img; 
+    rotated_image(img, final_img, filename, file_last_name);
+    return 0;
 }
