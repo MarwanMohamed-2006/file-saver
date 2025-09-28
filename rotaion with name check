@@ -74,18 +74,20 @@ Image rotated_image(Image img ,Image final_img, string filename , string file_la
 int main()
 {
     string filename , file_last_name;
-    cout << " plz enter the file name with format" <<endl;
-    cin >> filename;
-    try {
-        Image img(filename);
-        cout <<" plz enter the new name with the new format" << endl;
-    cin >> file_last_name; 
-    Image final_img; 
-    rotated_image(img, final_img, filename, file_last_name);
+    while (true) {
+        cout << "plz enter the file name with format " <<endl;
+        cin >> filename;
+        try {
+            Image img(filename); 
+            cout <<"plz enter the new name with the new format " << endl;
+            cin >> file_last_name; 
+            
+            Image final_img; 
+            rotated_image(img, final_img, filename, file_last_name);
+        } catch (std::invalid_argument const& e ) {
+            std::cout << "Error: " << e.what() << ". Please try again." <<endl;
+        } 
     }
-    catch (std::invalid_argument const& e )
-    {
-        std::cout << e.what() <<endl;
-    }
+    
     return 0;
 }
