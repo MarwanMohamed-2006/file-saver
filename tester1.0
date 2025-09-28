@@ -1,0 +1,124 @@
+#include "Image_Class.h"
+using namespace std;
+
+Image check_name(string img_name)
+{
+    string img_name;
+    Image img;
+
+    while (true) {
+        cout << "Please enter the image file name with the correcr format : ";
+        cin >> img_name;
+        try {
+            Image loaded_img(img_name);
+            img = loaded_img; 
+            cout << "Image loaded successfully. Please enter the new name for saving (e.g., inverted_image.bmp): " << endl;
+            cin >> img_name;
+            
+            return img; 
+
+        } catch (std::invalid_argument const& e ) {
+            std::cout << "Error loading image: " << e.what() << ". Please try again." << endl;
+        }
+    }
+}
+
+Image load_img(string img_name) {
+    Image img(img_name);
+    return img;
+}
+void save_img(Image img, string img_name,string imgName) {
+    
+    char choice;
+                cout << "Do you like save the image on the same file name ? (y/n): " << '\n';
+                cin >> choice;
+                if(choice == 'y')
+                {
+                    check_name(imgName);
+                    save_img;
+                }
+                else{
+                    cout << "plz enter the new name with format \n" ;
+                    string new_name;
+                    cin >> new_name;
+                    check_name(new_name);
+                    save_img;
+                }
+    
+    img.saveImage(img_name);
+}
+
+
+Image invert_image(Image img  )
+{
+    for (int i = 0; i < img.width; i++)
+    {
+        for (int j = 0; j < img.height; j++)
+        {
+            for (int k = 0; k < 3; k++)
+            {
+                img(i, j, k) = 255 - img(i, j, k);
+            }
+        }
+    }
+
+    return img;
+}
+Image grey_scale(Image img) {
+    for (int i = 0; i < img.height; i++) {
+        for (int j  = 0; j < img.width; j++) {
+            int red = img(j, i, 0);
+            int green = img(j, i, 1);
+            int blue = img(j, i, 2);
+            int avg = (red + green + blue) / 3 ;
+            img(j, i, 0) = avg;
+            img(j, i, 1) = avg;
+            img(j, i, 2) = avg;
+        }
+    }
+    return img;
+}
+int main() {
+    string imgName;
+    cout<<"Please enter the image file name: ";
+    cin>>imgName;
+    Image current_img = load_img(imgName);
+    int x = 1000;
+    while (x != 0) {
+        cout<<"1: load new image"<<endl;
+        cout<<"2: Grey scale filter"<<endl;
+        cout<<"3:Invert filter"<<endl;
+        cout<<"4: Save the image"<<endl;
+        cout<<"0: Exit"<<endl;
+        cin>>x;
+        switch (x) {
+            case 1:{
+                cin>>imgName;
+                current_img = load_img(imgName);
+                break;
+            }
+            case 2:{ current_img = grey_scale(current_img);
+                break;
+            }
+            case 3:{ current_img = invert_image(current_img);
+                break;
+            }
+            
+            case 4: {
+                save_img;
+            }
+            case 0: {
+                char choice;
+                cout<<"Do you want to save before exit? (y/n): ";
+                cin>>choice;
+                if (choice == 'y') {
+                    save_img;
+                }else if (choice == 'n'){
+                    x = 0;
+                }
+                break;
+            }
+        }
+    }
+    return 0;
+}
