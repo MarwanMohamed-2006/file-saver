@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-Image check_name(string& imgName) {
+Image check_name(string imgName) {
     Image img;
     while (true) {
         try {
