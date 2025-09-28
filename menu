@@ -1,0 +1,108 @@
+#include "Image_Class.h"
+#include <iostream>
+using namespace std;
+
+Image check_name(string& imgName) {
+    Image img;
+    while (true) {
+        try {
+            img = Image(imgName);
+            cout << "Image loaded successfully." << endl;
+            return img;
+        } catch (std::invalid_argument const& e) {
+            cout << "Error loading image: " << e.what() << ". Please try again." << endl;
+            cout << "Please enter the image file name again: ";
+            cin >> imgName;
+        }
+    }
+}
+
+Image load_img(string img_name) {
+    return Image(img_name);
+}
+
+void save_img(Image img, string& img_name, string imgName) {
+    char choice;
+    cout << "Do you want to save the image with the same file name? (y/n): ";
+    cin >> choice;
+
+    if (choice == 'y') {
+        img.saveImage(imgName);
+        cout << "Image saved as " << imgName << endl;
+    } else {
+        cout << "Please enter the new name with format: ";
+        string new_name;
+        cin >> new_name;
+        img.saveImage(new_name);
+        cout << "Image saved as " << new_name << endl;
+    }
+}
+
+Image invert_image(Image img) {
+    for (int i = 0; i < img.width; i++) {
+        for (int j = 0; j < img.height; j++) {
+            for (int k = 0; k < 3; k++) {
+                img(i, j, k) = 255 - img(i, j, k);
+            }
+        }
+    }
+    return img;
+}
+
+Image grey_scale(Image img) {
+    for (int i = 0; i < img.height; i++) {
+        for (int j = 0; j < img.width; j++) {
+            int red = img(j, i, 0);
+            int green = img(j, i, 1);
+            int blue = img(j, i, 2);
+            int avg = (red + green + blue) / 3;
+            img(j, i, 0) = avg;
+            img(j, i, 1) = avg;
+            img(j, i, 2) = avg;
+        }
+    }
+    return img;
+}
+
+int main() {
+    string imgName;
+    cout << "Please enter the image file name: ";
+    cin >> imgName;
+    Image current_img = check_name(imgName);
+
+    int x = -1;
+    while (x != 0) {
+        cout << "\n1: Load new image\n2: Grey scale filter\n3: Invert filter\n4: Save the image\n0: Exit\n";
+        cin >> x;
+
+        switch (x) {
+            case 1:
+                cout << "Enter new image file name: ";
+                cin >> imgName;
+                current_img = check_name(imgName);
+                break;
+            case 2:
+                current_img = grey_scale(current_img);
+                break;
+            case 3:
+                current_img = invert_image(current_img);
+                break;
+            case 4:
+                save_img(current_img, imgName, imgName);
+                break;
+            case 0: {
+                char choice;
+                cout << "Do you want to save before exit? (y/n): ";
+                cin >> choice;
+                if (choice == 'y') {
+                    save_img(current_img, imgName, imgName);
+                }
+                break;
+            }
+            default:
+                cout << "Invalid option. Please try again." << endl;
+        }
+    }
+
+    return 0;
+}
