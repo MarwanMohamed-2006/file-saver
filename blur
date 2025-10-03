@@ -15,16 +15,16 @@ Image blur_image(Image img)
                 int sum = 0;
                 int count = 0;
 
-                for (int x = -4; dx <= 4; dx++)
+                for (int x = -4; x <= 4; x++)
                 {
-                    for (int y = -4; dy <= 4; dy++)
+                    for (int y = -4; y <= 4; y++)
                     {
                         int total_x = i + x;
                         int total_y = j + y;
 
                         if (total_x >= 0 && total_x < img.width && total_y >= 0 && total_y < img.height)
                         {
-                            sum += img(nx, ny, k);
+                            sum += img(total_x, total_y, k);
                             count++;
                         }
                     }
