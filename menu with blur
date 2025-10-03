@@ -227,10 +227,6 @@ Image cropImage(Image& image) {
         return cropped;
     }
 }
-#include <iostream>
-#include "Image_Class.h"
-using namespace std;
-
 Image blur_image(Image img)
 {
     Image blur(img.width, img.height);
