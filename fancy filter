@@ -7,17 +7,16 @@ using namespace std;
 
 Image frame_color_filter(Image img, string file_last_name)
 {
-    int blue = 7;
-    int white = 2;
-    int black = 2;
-    int gap = 5;
-    int small_gap = 2;
+    int blue = 25;
+    int white = 5;
+    int black = 5;
+    int gap = 7;
+    int small_gap = 4;
 
     for (int i = 0; i < img.width; i++)
     {
         for (int j = 0; j < img.height; j++)
         {
-            // Outer white border
             if (i < white || i >= img.width - white || j < white || j >= img.height - white)
             {
                 img(i, j, 0) = 255;
@@ -25,7 +24,6 @@ Image frame_color_filter(Image img, string file_last_name)
                 img(i, j, 2) = 255;
             }
 
-            // Blue frame
             else if (i < white + blue || i >= img.width - white - blue || j < white + blue || j >= img.height - white - blue)
             {
                 img(i, j, 0) = 0;
@@ -33,7 +31,6 @@ Image frame_color_filter(Image img, string file_last_name)
                 img(i, j, 2) = 255;
             }
 
-            // Inner white layer
             else if (i < white + blue + white || i >= img.width - white - blue - white || j < white + blue + white || j >= img.height - white - blue - white)
             {
                 img(i, j, 0) = 255;
@@ -41,13 +38,10 @@ Image frame_color_filter(Image img, string file_last_name)
                 img(i, j, 2) = 255;
             }
 
-            // Gap layer (left empty intentionally)
             else if (i < white + blue + white + gap || i >= img.width - white - blue - white - gap || j < white + blue + white + gap || j >= img.height - white - blue - white - gap)
             {
-                // Empty gap
-            }
 
-            // Inner white line
+            }
             else if (i < white + blue + white + gap + white || i >= img.width - white - blue - white - gap - white || j < white + blue + white + gap + white || j >= img.height - white - blue - white - gap - white)
             {
                 img(i, j, 0) = 255;
@@ -55,13 +49,11 @@ Image frame_color_filter(Image img, string file_last_name)
                 img(i, j, 2) = 255;
             }
 
-            // Small gap (left empty intentionally)
             else if (i < white + blue + white + gap + white + small_gap || i >= img.width - white - blue - white - gap - white - small_gap || j < white + blue + white + gap + white + small_gap || j >= img.height - white - blue - white - gap - white - small_gap)
             {
-                // Empty small gap
+
             }
 
-            // Final black frame
             else if (i < white + blue + white + gap + white + small_gap + black || i >= img.width - white - blue - white - gap - white - small_gap - black || j < white + blue + white + gap + white + small_gap + black || j >= img.height - white - blue - white - gap - white - small_gap - black)
             {
                 img(i, j, 0) = 0;
