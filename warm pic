@@ -1,0 +1,47 @@
+#include <iostream>
+#include "Image_Class.h"
+using namespace std;
+
+Image warm_filter(Image img, string file_last_name)
+{
+    for (int i = 0; i < img.width; i++)
+    {
+        for (int j = 0; j < img.height; j++)
+        {
+
+            int r = img(i, j, 0);
+            int g = img(i, j, 1);
+            int b = img(i, j, 2);
+
+            r = min(255, r + 50);
+            g = min(255, g + 15);   
+            b = max(0, b - 40);
+
+            img(i, j, 0) = r;
+            img(i, j, 2) = b;
+            img(i, j, 1) = g; 
+
+        }
+    }
+
+    img.saveImage(file_last_name);
+    return img;
+}
+
+int main()
+{
+    string filename, file_last_name;
+    cout << " Please enter the file name with format: ";
+    cin >> filename;
+
+    Image img(filename);
+
+    cout << "\n Please enter the new name with the new format: ";
+    cin >> file_last_name;
+
+    warm_filter(img, file_last_name);
+
+    cout << "\n Warm filter applied and image saved as: " << file_last_name << endl;
+
+    return 0 ;
+}
