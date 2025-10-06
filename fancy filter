@@ -1,0 +1,93 @@
+#include <iostream>
+#include "Image_Class.h"
+
+using namespace std;
+
+
+
+Image frame_color_filter(Image img, string file_last_name)
+{
+    int blue = 7;
+    int white = 2;
+    int black = 2;
+    int gap = 5;
+    int small_gap = 2;
+
+    for (int i = 0; i < img.width; i++)
+    {
+        for (int j = 0; j < img.height; j++)
+        {
+            // Outer white border
+            if (i < white || i >= img.width - white || j < white || j >= img.height - white)
+            {
+                img(i, j, 0) = 255;
+                img(i, j, 1) = 255;
+                img(i, j, 2) = 255;
+            }
+
+            // Blue frame
+            else if (i < white + blue || i >= img.width - white - blue || j < white + blue || j >= img.height - white - blue)
+            {
+                img(i, j, 0) = 0;
+                img(i, j, 1) = 0;
+                img(i, j, 2) = 255;
+            }
+
+            // Inner white layer
+            else if (i < white + blue + white || i >= img.width - white - blue - white || j < white + blue + white || j >= img.height - white - blue - white)
+            {
+                img(i, j, 0) = 255;
+                img(i, j, 1) = 255;
+                img(i, j, 2) = 255;
+            }
+
+            // Gap layer (left empty intentionally)
+            else if (i < white + blue + white + gap || i >= img.width - white - blue - white - gap || j < white + blue + white + gap || j >= img.height - white - blue - white - gap)
+            {
+                // Empty gap
+            }
+
+            // Inner white line
+            else if (i < white + blue + white + gap + white || i >= img.width - white - blue - white - gap - white || j < white + blue + white + gap + white || j >= img.height - white - blue - white - gap - white)
+            {
+                img(i, j, 0) = 255;
+                img(i, j, 1) = 255;
+                img(i, j, 2) = 255;
+            }
+
+            // Small gap (left empty intentionally)
+            else if (i < white + blue + white + gap + white + small_gap || i >= img.width - white - blue - white - gap - white - small_gap || j < white + blue + white + gap + white + small_gap || j >= img.height - white - blue - white - gap - white - small_gap)
+            {
+                // Empty small gap
+            }
+
+            // Final black frame
+            else if (i < white + blue + white + gap + white + small_gap + black || i >= img.width - white - blue - white - gap - white - small_gap - black || j < white + blue + white + gap + white + small_gap + black || j >= img.height - white - blue - white - gap - white - small_gap - black)
+            {
+                img(i, j, 0) = 0;
+                img(i, j, 1) = 0;
+                img(i, j, 2) = 0;
+            }
+        }
+    }
+
+    img.saveImage(file_last_name);
+    return img;
+}
+int main()
+{
+    string filename, file_last_name;
+    cout << "Please enter the file name with format: ";
+    cin >> filename;
+
+    Image img(filename);
+
+    cout << "\nPlease enter the new name with the new format: ";
+    cin >> file_last_name;
+
+    frame_color_filter(img, file_last_name);
+
+    cout << "\nImage saved with blue frame, white border, and a gap in between: " << file_last_name << endl;
+
+    return 0;
+}   
