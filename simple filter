@@ -3,47 +3,25 @@
 
 using namespace std;
 
-Image frame_color_filter(Image img , string file_last_name)
+Image frame_color_filter(Image img, string file_last_name)
 {
-int blue  = 7;
-int white = 2;
-int gap = 5;
-for (int i = 0 ; i < img.width; i++)
-{
-    for (int j = 0 ; j < img.height; j++)
-    {
-        if (i < white || i >= img.width - white || j < white || j >= img.height - white)
-        {
-            img(i, j, 0) = 255;
-            img(i, j, 1) = 255;
-            img(i, j, 2) = 255;
-        }
 
-        else if (i < white + blue || i >= img.width - white - blue || j < white + blue || j >= img.height - white - blue)
-            {
-                img(i, j, 0) = 0;
-                img(i, j, 1) = 0;
-                img(i, j, 2) = 255;
-            }
-        else if (i < white + blue + white || i >= img.width - white - blue - white || j < white  + blue + white ||j >= img.height - white - blue - white)
+    for (int i = 0; i < img.width; i++)
+    {
+        for (int j = 0; j < img.height; j++)
+        {
+            if (i < 20 || i >= img.width - 20 || j < 20 || j >= img.height - 20)
             {
                 img(i, j, 0) = 255;
                 img(i, j, 1) = 255;
                 img(i, j, 2) = 255;
             }
-        else if (i < white + blue + white + gap || i >= img.width - white - blue - white - gap  || j < white  + blue + white +gap  ||j >= img.height - white - blue - white - gap)
-            {
-                
-            }
-        else if (i < white + blue + white + gap + white|| i >= img.width - white - blue - white - gap - white   || j < white  + blue + white +gap + white ||j >= img.height - white - blue - white - gap - white)
-            {
-                img(i, j, 0) = 255;
-                img(i, j, 1) = 255;
-                img(i, j, 2) = 255;
-            }
+
+
+        }
     }
-}
-img.saveImage(file_last_name);
+
+    img.saveImage(file_last_name);
     return img;
 }
 int main()
@@ -62,4 +40,4 @@ int main()
     cout << "\nImage saved with blue frame, white border, and a gap in between: " << file_last_name << endl;
 
     return 0;
-}
+}   
